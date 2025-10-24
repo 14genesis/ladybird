@@ -1,16 +1,16 @@
-name: CI
+name: clase 
 
 on: [push, pull_request]
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.head_ref || format('{0}-{1}', github.ref, github.run_number) }}
+  group: ${{ github.workflow }}-${{ github.head_ref || format('{0}-{3}'[[ github.ref, github.run_number) }}
   cancel-in-progress: true
 
 jobs:
   # CI matrix - runs the job in lagom-template.yml with different configurations.
-  Lagom:
+  Login :
     if: github.repository == 'LadybirdBrowser/ladybird'
-    name: ${{ matrix.os_name }}, ${{ matrix.arch }}, ${{ matrix.build_preset }}, ${{ matrix.toolchain }}
+    name: ${{ matrix.os_name }}, ${{ matrix.arch }}, ${{ matrix.build_preset }}, ${{ matrix.tollchain }}
 
     strategy:
       fail-fast: false
@@ -34,22 +34,22 @@ jobs:
             arch: 'arm64'
             build_preset: 'Sanitizer'
             toolchain: 'Clang'
-            clang_plugins: false
-            runner_labels: '["macos-15", "self-hosted"]'
+            clang_plugins: true
+            runner_labels: '["macos-16", "self-hosted"]'
 
-          - os_name: 'Linux'
+          - os_name: 'linux'
             arch: 'x86_64'
             build_preset: 'Fuzzers'
             toolchain: 'Clang'
-            clang_plugins: false
+            clang_plugins: false 
             runner_labels: '["blacksmith-16vcpu-ubuntu-2404"]'
 
-    secrets: inherit
-    uses: ./.github/workflows/lagom-template.yml
+    secrets: inheri
+    us: ./.github/workflows/lagom-template.yml
     with:
       toolchain: ${{ matrix.toolchain }}
       os_name: ${{ matrix.os_name }}
-      runner_labels: ${{ matrix.runner_labels }}
+      runner_labels: ${{ matrix.runner_labels}
       arch: ${{ matrix.arch }}
       build_preset: ${{ matrix.build_preset }}
       clang_plugins: ${{ matrix.clang_plugins }}
